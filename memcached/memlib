@@ -1,0 +1,37 @@
+flush_all() {
+    local host=$1
+    local port=$2
+    echo -e "flush_all 1\r" | nc -w ${timeout} ${host} ${port}
+}
+
+set_key_value() {
+    local host=$1
+    local port=$2
+    local key=$3
+    local value=$4
+    local length=${#value}
+    echo -e "set ${key} 0 600 ${length}\r\n${value}\r" | nc -w ${timeout} ${host} ${port}
+}
+
+get_key_value() {
+    local host=$1
+    local port=$2
+    local key=$3
+    echo -e "get ${key}\r" | nc -w ${timeout} ${host} ${port}
+}
+
+replace_key_value() {
+    local host=$1
+    local port=$2
+    local key=$3
+    local value=$4
+    local length=${#value}
+    echo -e "replace ${key} 0 600 ${length}\r\n${value}\r" | nc -w ${timeout} ${host} ${port}
+}
+
+delete_key_value() {
+    local host=$1
+    local port=$2
+    local key=$3
+    echo -e "delete ${key}\r" | nc -w ${timeout} ${host} ${port}
+}
